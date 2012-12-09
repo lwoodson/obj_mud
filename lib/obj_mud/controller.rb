@@ -19,6 +19,7 @@ module ObjMud
       end
 
       def start
+        ARGV.clear
         display_output hello_msg
         display_output(renderer.render_location(viewer.location))
         collect_input

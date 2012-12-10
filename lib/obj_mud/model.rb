@@ -1,5 +1,6 @@
 require 'observer'
 
+require 'obj_mud/config'
 require 'obj_mud/events'
 
 module ObjMud
@@ -9,34 +10,38 @@ module ObjMud
     # viewer moves between locations.
     class Viewer
       include Observable
+      include ConfigDependent
+
       attr_reader :location
 
       def initialize(location)
         @location = location
       end
 
-      def move(new_location)
+      def move(path)
         old_location = @location
-        @location = new_location
+        @location = Location.new(path.object)
         changed
-        evt = ObjMud::Events::MovedLocation.new self, old_location, new_location
+        evt = ObjMud::Events::MovedLocation.new self, old_location, @location
         notify_observers(evt)
       end
     end
 
     class Location
+      include ConfigDependent
       attr_reader :object, :paths
 
       def initialize(obj=nil)
         @object = obj
         @paths = []
+        location_initializer().call(self)
       end
     end
 
     class Path
-      attr_reader :location
-      def initialize(location)
-        @location = location
+      attr_reader :object
+      def initialize(obj=nil)
+        @object = obj
       end
     end
   end

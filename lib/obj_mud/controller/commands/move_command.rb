@@ -12,7 +12,7 @@ module ObjMud
           destination = nil
           controller.viewer.location.paths.each do |path|
             if path_detected.call(input, path)
-              destination = path.location
+              destination = path
             end
           end
           raise "#{input} is not a valid destination" if destination.nil?

@@ -1,6 +1,1 @@
-1. Add configurable logic that when you move to a new location,
-   it will initialize the location (and possibly the business
-   object).  Or maybe this is an entered event.
-2. Create gem that leverages ObjMud to allow the walking of
-   ActiveRecord models.
-3. Spec tests.
+1. Spec tests.

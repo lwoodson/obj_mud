@@ -8,8 +8,12 @@ module ObjMud
           [:look, :ls]
         end
 
-        def perform(tokens)
-          controller.display_output(renderer.render_location(controller.viewer.location))
+        def perform(filter, *other_tokens)
+          output = renderer.render_location(controller.viewer.location)
+          unless filter.nil? or filter.empty?
+            output = output.split("\n").grep(eval(filter)).join("\n")
+          end
+          controller.display_output(output)
         end
 
         ObjMud::Controller::Commands.register(self)

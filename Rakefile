@@ -5,24 +5,50 @@ task :console do
   start_irb
 end
 
-task :obj_mud_console do
+task :demo do
+  class Person
+    attr_reader :name, :relatives
+
+    def initialize(name)
+      @name = name
+      @relatives = []
+    end
+
+    def to_s
+      "#{name}(relatives: #{relatives.map{|r| r.name}.join(", ")})"
+    end
+  end
+
   load_env
+  dick = Person.new("Dick")
+  jane = Person.new("Jane")
+  joe = Person.new("Joe")
+  dick.relatives << jane
+  dick.relatives << joe
+  jane.relatives << dick
+  jane.relatives << joe
+  joe.relatives << dick
+  joe.relatives << jane
 
-  loc1 = ObjMud::Model::Location.new("loc1")
-  loc2 = ObjMud::Model::Location.new("loc2")
-  loc1.paths << ObjMud::Model::Path.new(loc2)
-  viewer = ObjMud::Model::Viewer.new(loc1)
-  loc2.paths << ObjMud::Model::Path.new(loc1)
+  ObjMud.configure do |config|
+    config.location_initializer = lambda do |location| 
+      location.object.relatives.each do |relative|
+        location.paths << ObjMud::Model::Path.new(relative)
+      end
+    end
 
-  controller = ObjMud::Controller.new
-  controller.config = ObjMud::Config.instance
-  controller.viewer = viewer
-  viewer.add_observer(controller)
-  controller.start
+    config.path_detected = lambda {|input, path| path.object.name.downcase == input.downcase}
+  end
+
+  ObjMud.start(dick)
 end
 
 task :test do
   raise "Write some tests, Dammit!"
+end
+
+task :build_gem do
+  puts `gem build obj_mud.gemspec`
 end
 
 private

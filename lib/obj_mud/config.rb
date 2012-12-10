@@ -1,30 +1,35 @@
 require 'singleton'
+require 'ostruct'
 
 module ObjMud
+  def self.configure(&block)
+    block.call(ObjMud::Config.instance)
+  end
+
   class Config
     include Singleton
-    attr_accessor :renderer, :path_detected, :hello_msg, :goodbye_msg
-    # TODO delegator to an openstruct for anything not defined here.
-    # Will allow for arbitrary configuration for any commands defined
-    # outside of the default set.
 
     def initialize
-      @renderer = ObjMud::View::DefaultRenderer.new
-      @path_detected = lambda {|input, path| path.location.object == input}
-      @hello_msg = "Welcome!  The minions of #{__FILE__} grow stronger...\n"
-      @goodbye_msg = "Goodbye!  The minions of #{__FILE__} grow weaker...\n"
+      @open_config = OpenStruct.new
+      @open_config.location_initializer = lambda {|location| }
+      @open_config.renderer = ObjMud::View::DefaultRenderer.new
+      @open_config.path_detected = lambda {|input, path| path.location.object == input}
+      @open_config.hello_msg = "Welcome!  The minions of #{__FILE__} grow stronger...\n"
+      @open_config.goodbye_msg = "Goodbye!  The minions of #{__FILE__} grow weaker...\n"
     end
 
-    def self.init(&block)
-      block.call(self.instance)
+    def method_missing(method, *args)
+      @open_config.send(method.to_sym, *args)
     end
   end
 
   module ConfigDependent
-    attr_accessor :config
-
     def method_missing(method_name, *args)
       config.send(method_name.to_sym, *args)
+    end
+
+    def config
+      Config.instance
     end
   end
 end

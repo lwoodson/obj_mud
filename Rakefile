@@ -33,11 +33,9 @@ task :demo do
   ObjMud.configure do |config|
     config.location_initializer = lambda do |location| 
       location.object.relatives.each do |relative|
-        location.paths << ObjMud::Model::Path.new(relative)
+        location.paths << ObjMud::Model::Path.new(relative.name, relative)
       end
     end
-
-    config.path_detected = lambda {|input, path| path.object.name.downcase == input.downcase}
   end
 
   ObjMud.start(dick)

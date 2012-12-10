@@ -31,7 +31,7 @@ module ObjMud
       include ConfigDependent
       attr_reader :object, :paths
 
-      def initialize(obj=nil)
+      def initialize(obj)
         @object = obj
         @paths = []
         location_initializer().call(self)
@@ -39,8 +39,9 @@ module ObjMud
     end
 
     class Path
-      attr_reader :object
-      def initialize(obj=nil)
+      attr_reader :name, :object
+      def initialize(name, obj)
+        @name = name
         @object = obj
       end
     end

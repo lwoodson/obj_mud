@@ -14,8 +14,8 @@ module ObjMud
       @open_config.location_initializer = lambda {|location| }
       @open_config.renderer = ObjMud::View::DefaultRenderer.new
       @open_config.path_detected = lambda {|input, path| path.name.to_s.downcase == input.to_s.downcase}
-      @open_config.hello_msg = "Welcome!  The minions of #{__FILE__} grow stronger...\n"
-      @open_config.goodbye_msg = "Goodbye!  The minions of #{__FILE__} grow weaker...\n"
+      @open_config.hello_msg = "Welcome!  The minions of your project grow stronger...\n"
+      @open_config.goodbye_msg = "Goodbye!  The minions of your project grow weaker...\n"
     end
 
     def method_missing(method, *args)

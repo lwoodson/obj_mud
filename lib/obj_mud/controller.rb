@@ -35,6 +35,7 @@ module ObjMud
             raise "I don't understand.  Type 'help' for available commands." if command_class.nil?
             command = command_class.new
             command.controller = self
+            # TODO this may not be necessary?
             command.config = config
             command.perform(args.join(" "))
           rescue StandardError => e

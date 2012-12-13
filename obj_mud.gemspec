@@ -20,5 +20,8 @@ Gem::Specification.new do |s|
     "lib/obj_mud/controller/commands/quit_command.rb"
   ] 
   s.homepage  = 'https://github.com/lwoodson/obj_mud/'
+  s.add_development_dependency 'mocha'
+  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'debugger'
 end
 

@@ -1,6 +1,8 @@
 require 'singleton'
 require 'ostruct'
 
+require 'obj_mud/view'
+
 module ObjMud
   def self.configure(&block)
     block.call(ObjMud::Config.instance)

@@ -19,24 +19,22 @@ module ObjMud
       end
 
       def start
-        ARGV.clear
         display_output hello_msg
         display_output(renderer.render_location(viewer.location))
         collect_input
       end
 
       def collect_input
-        STDOUT.write("\n> ")
+        ARGV.clear
+        $stdout.write("\n> ")
         ARGF.each do |line|
           begin
             command_str, *args = line.split
-            raise "I don't understand.  Type 'help for available commands." if command_str.nil?
+            raise "I don't understand.  Type 'help' for available commands." if command_str.nil?
             command_class = ObjMud::Controller::Commands.find(command_str.to_sym)
             raise "I don't understand.  Type 'help' for available commands." if command_class.nil?
             command = command_class.new
             command.controller = self
-            # TODO this may not be necessary?
-            command.config = config
             command.perform(args.join(" "))
           rescue StandardError => e
             display_output(e)
@@ -44,7 +42,7 @@ module ObjMud
           if exiting?
             break
           else
-            STDOUT.write("\n> ")
+            $stdout.write("\n> ")
           end
         end
       end
@@ -60,7 +58,7 @@ module ObjMud
       def moved_location(evt)
         display_output(renderer.render_moved_location(evt.viewer, evt.old_location, evt.new_location))
         display_output("\n")
-        display_output(renderer.render_location(viewer.location))
+        display_output(renderer.render_location(evt.new_location))
       end
     end
 

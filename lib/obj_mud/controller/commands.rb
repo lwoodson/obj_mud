@@ -26,3 +26,9 @@ module ObjMud
     end
   end
 end
+
+command_path = File.join(File.dirname(__FILE__), 'commands')
+Dir.entries(command_path).grep(/.+\.rb/).each do |command_file|
+  name, ext = command_file.split(".")
+  require "obj_mud/controller/commands/#{name}" if not name.nil? and not name.empty?
+end

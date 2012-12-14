@@ -5,9 +5,6 @@ require 'obj_mud/events'
 
 module ObjMud
   module Model
-    # TODO something to create the model each step of the way.
-    # Basically, the exits need to be recreated whenever the
-    # viewer moves between locations.
     class Viewer
       include Observable
       include ConfigDependent

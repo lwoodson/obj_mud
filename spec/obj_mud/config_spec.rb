@@ -61,7 +61,7 @@ describe ObjMud::ConfigDependent do
     class TestConfigDependent
       include ObjMud::ConfigDependent
       def renderer
-        puts "no config for joo"
+        "no config for joo"
       end
     end
     @config_dependent = TestConfigDependent.new

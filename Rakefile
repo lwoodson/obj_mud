@@ -1,10 +1,11 @@
 task :default => [:test]
 
-task :console do
-  load_env
-  start_irb
+desc "Invokes all spec tests"
+task :test do
+  puts `rspec`
 end
 
+desc "Runs a small demo of obj_mud navigating people and their relatives."
 task :demo do
   class Person
     attr_reader :name, :relatives
@@ -41,11 +42,8 @@ task :demo do
   ObjMud.start(dick)
 end
 
-task :test do
-  raise "Write some tests, Dammit!"
-end
-
-task :build_gem do
+desc "builds the gem"
+task :build do
   puts `gem build obj_mud.gemspec`
 end
 

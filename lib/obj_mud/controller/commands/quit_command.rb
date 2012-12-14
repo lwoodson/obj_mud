@@ -8,7 +8,7 @@ module ObjMud
           [:exit, :quit]
         end
 
-        def perform(tokens)
+        def perform(*tokens)
           controller.display_output goodbye_msg
           controller.renderer
           controller.exiting = true

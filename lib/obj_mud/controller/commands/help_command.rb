@@ -8,7 +8,7 @@ module ObjMud
           [:help]
         end
 
-        def perform(tokens)
+        def perform(*tokens)
           command_inputs = ObjMud::Controller::Commands.inputs.join(", ")
           controller.display_output "Available commands: #{command_inputs}"
         end

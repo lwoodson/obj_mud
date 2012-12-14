@@ -8,7 +8,7 @@ module ObjMud
           [:go, :move]
         end
 
-        def perform(input, *other_args)
+        def perform(input, *other_tokens)
           destination = nil
           controller.viewer.location.paths.each do |path|
             if path_detected.call(input, path)

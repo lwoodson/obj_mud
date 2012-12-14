@@ -10,8 +10,12 @@ module ObjMud
 
         def perform(filter, *other_tokens)
           output = renderer.render_location(controller.viewer.location)
-          unless filter.nil? or filter.empty?
-            output = output.split("\n").grep(eval(filter)).join("\n")
+          begin
+            unless filter.nil? or filter.empty?
+              output = output.split("\n").grep(eval(filter)).join("\n")
+            end
+          rescue SyntaxError => e
+            raise "Could not eval #{filter}"
           end
           controller.display_output(output)
         end

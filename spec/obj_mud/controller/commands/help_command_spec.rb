@@ -1,5 +1,5 @@
-require_relative File.join('..','..','..','spec_helper')
-require_relative 'common_command_spec'
+require 'spec_helper'
+require 'obj_mud/controller/commands/common_command_spec'
 require 'obj_mud/controller'
 
 include CommonCommandSpecs

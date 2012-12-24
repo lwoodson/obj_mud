@@ -24,8 +24,8 @@ describe ObjMud::Controller::Commands::MoveCommand do
     it "should move the viewer to the new location if path is found" do
       path = @viewer.location.paths.first
       subject.expects(:path_detected).returns(lambda {|input, path| true})
-      @viewer.expects(:move).with(path)
       subject.perform(path.object)
+      @viewer.location.object.should eq(path.object)
     end
 
     it "should not move the viewer and raise an exception if path is not found" do

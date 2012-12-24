@@ -21,7 +21,7 @@ describe ObjMud::Controller::Impl do
     $stdin = StringIO.new("help\n\nfoobar\nexit\n")
     @controller.collect_input
     $stdout.rewind
-    $stdout.read.should eq("\n> Available commands: exit, go, help, look, ls, move, quit\n" + \
+    $stdout.read.should eq("\n> Available commands: back, exit, go, help, look, ls, move, quit\n" + \
                            "\n> I don't understand.  Type 'help' for available commands.\n" + \
                            "\n> I don't understand.  Type 'help' for available commands.\n" + \
                            "\n> Goodbye!  The minions of your project grow weaker...\n")

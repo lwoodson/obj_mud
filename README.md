@@ -3,7 +3,9 @@ ObjMud is a framework to provide a text-based adventure game interface into a
 business model.  It is geeky as all get out.  Its genesis was to support the
 Zormk gem, which provides a Zork-like interface into ActiveRecord (and
 potentially other ORM) models.  Beyond being an extremely geeky exercise in
-mental masturbation, it has helped me be able to understand the domain model
+mental masturbation, it actually serves a useful purpose (being able to
+make sense of a really complex rails app with 400+ models) at least in the Zormk
+case.
 in a complicated enterprisy rails application (400+ models, some with like 12
 mixins, etc...).
 
@@ -11,8 +13,9 @@ mixins, etc...).
 The user enters the ObjMud environment at a location, which is bound to a
 business object.  The viewer is presented with a text rendering of the business
 object at their current location.  The viewer uses a move command to navigate the
-graph of locations and paths.  The viewer can terminate the session with a quit
-command.
+graph of locations and paths.  At each location, they have a re-rendering of
+the business object at their location.  The viewer can terminate the session 
+with a quit command.
 
 ## Demo Session ##
 `rake demo` will start a demo session of the interface from the command line
@@ -76,7 +79,8 @@ true.
 mud
 
 In practive, you will probably need to provide a location_initializer, renderer
-and path_detected callable appropriate to your context.
+and path_detected callable appropriate to your context.  You can look at the
+demo rake task to see a working configuration example.
 
 The configuration object passed to the block given the configure call is backed
 by OpenStruct, so you are free to stick whatever other information you need
@@ -118,4 +122,11 @@ class DanceCommand < ObjMud::Controller::Commands::Base
   ObjMud::Controller::Commands.register(self)
 end
 ```
+
+## Contribution ##
+Fork, branch, commit, code, test, push, send pull request.
+
+## License ##
+ObjMud is copyright &#169; 2012 by Lance Woodson.  It is free software and may
+be redistributed under the terms in the LICENSE.txt file.
 

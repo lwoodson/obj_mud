@@ -25,9 +25,8 @@ module ObjMud
       end
 
       def collect_input
-        ARGV.clear
         $stdout.write("\n> ")
-        ARGF.each do |line|
+        $stdin.each do |line|
           begin
             command_str, *args = line.split
             raise "I don't understand.  Type 'help' for available commands." if command_str.nil?
